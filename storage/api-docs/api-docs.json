@@ -1,0 +1,157 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Digital Risks Open API",
+        "contact": {
+            "email": "john@doe.com"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Fetch all users",
+                "description": "Returns a list of users",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Create a user",
+                "description": "Create a user",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "User to add to database",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "validation error"
+                    }
+                }
+            }
+        },
+        "/api/users/{user}": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Find user by id",
+                "description": "Returns a single user",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "ID of user to fetch",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "title": "User Model",
+                "description": "User model",
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "title": "Full Name",
+                        "description": "Full Name",
+                        "format": "string",
+                        "example": "John doe"
+                    },
+                    "email": {
+                        "title": "Email Address",
+                        "description": "Email Address",
+                        "format": "string",
+                        "example": "john@doe.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Password",
+                        "format": "string",
+                        "example": "Password123!"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "created_at",
+                        "format": "string"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "updated_at",
+                        "format": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            }
+        }
+    }
+}
